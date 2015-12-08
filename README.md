@@ -1,5 +1,7 @@
 # sublime-scripts
 
+[![The MIT License](https://img.shields.io/badge/license-MIT-orange.svg?style=flat-square)](http://opensource.org/licenses/MIT)
+
 Collection of useful scripts to be used with your own Sublime Text packages
 
 ## Scripts
@@ -23,3 +25,7 @@ Install global Node dependencies, equivalent `npm install -g <package>`. Alterna
 ## License
 
 This work is licensed under the [The MIT License](LICENSE).
+
+## Donate
+
+You are welcome support this project using [Flattr](https://flattr.com/submit/auto?user_id=idleberg&url=https://github.com/idleberg/BridleNSIS-Sublime-Text) or Bitcoin `17CXJuPsmhuTzFV2k4RKYwpEHVjskJktRd`
