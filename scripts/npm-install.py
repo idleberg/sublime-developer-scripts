@@ -1,4 +1,4 @@
-# npm-install.py (via https://github.com/idleberg/sublime-scripts)
+# npm-install.py (via https://github.com/idleberg/sublime-developer-scripts)
 
 import os, sublime, sublime_plugin, subprocess
 
@@ -13,7 +13,7 @@ def conf_error(me):
 def npm_error(me):
     import sys, webbrowser
 
-    if sublime.ok_cancel_dialog("Some package dependencies could not be installed automatically. Please refer to the installation guide to resolve this problem.\n\nDo you want to visit the website for this package?", "Visit website"):
+    if sublime.ok_cancel_dialog("Some package dependencies could not be installed automatically. Please refer to the installation guide to resolve this problem.\n\nDo you want to open the website for this package?", "Open website"):
         webbrowser.open("https://packagecontrol.io/packages/"+me)
     sys.exit()
 

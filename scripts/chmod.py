@@ -1,4 +1,4 @@
-# chmod.py (via https://github.com/idleberg/sublime-scripts)
+# chmod.py (via https://github.com/idleberg/sublime-developer-scripts)
 
 import os, stat, sublime, sublime_plugin
 
