@@ -8,6 +8,7 @@ files = [
 ]
 
 def plugin_loaded():
+    from os.path import join
     from package_control import events
     
     # Get name of package folder
@@ -18,7 +19,7 @@ def plugin_loaded():
             for file in files:
 
                 # Concat full path
-                file_path = sublime.packages_path() + '/' + me + '/' + file
+                file_path = join(sublime.packages_path(), me + '/' + file)
 
                 # Change permissions, if file exists
                 if os.path.isfile(file_path):
