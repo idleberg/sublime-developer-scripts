@@ -21,6 +21,10 @@ Install Git dependencies, equivalent to `git clone <repository>`. Falls back to 
 
 Install global Node dependencies, equivalent `npm install -g <package>`. Alternatively, you can use this to install dependencies specified in supplied `package.json` (ignores devDependencies!)
 
+### pip-install.py
+
+Install Python packages, equivalent to `pip install <package>`.
+
 ## File Operations
 
 ### chmod.py
