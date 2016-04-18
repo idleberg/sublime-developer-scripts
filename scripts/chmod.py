@@ -14,7 +14,7 @@ def plugin_loaded():
     # Get name of package folder
     me = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
-    if len(file) > 0:
+    if len(files) > 0:
         if (events.install(me) or events.post_upgrade(me)) and os.name is 'posix' or 'mac':
             for file in files:
 
