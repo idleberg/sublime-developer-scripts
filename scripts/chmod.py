@@ -23,7 +23,7 @@ def plugin_loaded():
 
                 # Change permissions, if file exists
                 if os.path.isfile(file_path):
-                    sublime.status_message("[%s] chmod +x %s" % ( me, package))
+                    sublime.status_message("[%s] chmod +x %s" % (me, package))
                     st = os.stat(file_path)
                     os.chmod(file_path, st.st_mode | stat.S_IEXEC)
 
