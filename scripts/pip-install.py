@@ -21,24 +21,27 @@ def plugin_loaded():
     from package_control import events
     from subprocess import check_call
 
-    # Get name of package folder
+    # Get name of package
     me = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
-    package_dir = sublime.packages_path() + '/' + me
+    if events.install(me) or events.post_upgrade(me):
 
-    for package in packages:
-        if package:
+        # Get absolute package path
+        package_path = os.path.join(sublime.packages_path(), me)
 
-            try:
-                os.chdir(package_dir)
-                sublime.status_message("[%s] pip install --user %s" % ( me, package))
-                check_call(['pip', 'install',  package])
-                sublime.status_message("[%s] Completed" % me)
+        for package in packages:
+            if package:
 
-            except subprocess.CalledProcessError:
-                pip_error(me)
+                try:
+                    os.chdir(package_path)
+                    sublime.status_message("[%s] pip install --user %s" % ( me, package))
+                    check_call(['pip', 'install',  package])
+                    sublime.status_message("[%s] Completed" % me)
 
+                except subprocess.CalledProcessError:
+                    pip_error(me)
+
+            else:
+                conf_error(me)
         else:
             conf_error(me)
-    else:
-        conf_error(me)

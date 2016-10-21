@@ -11,15 +11,15 @@ def plugin_loaded():
     from os.path import join
     from package_control import events
     
-    # Get name of package folder
+    # Get name of package
     me = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
     if len(files) > 0:
         if (events.install(me) or events.post_upgrade(me)) and os.name is 'posix' or 'mac':
             for file in files:
 
-                # Concat full path
-                file_path = join(sublime.packages_path(), me + '/' + file)
+                # Get absolute file path
+                file_path = os.path.join(sublime.packages_path(), me, file)
 
                 # Change permissions, if file exists
                 if os.path.isfile(file_path):

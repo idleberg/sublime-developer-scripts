@@ -21,36 +21,38 @@ def plugin_loaded():
     from package_control import events
     from subprocess import check_call
 
-    # Get name of package folder
+    # Get name of package
     me = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
-    package_dir = sublime.packages_path() + '/' + me
+    if events.install(me) or events.post_upgrade(me):
 
-    # Install packages specified in the array
-    if len(packages) > 0:
-        for package in packages:
-            if package:
+        # Get absolute package path
+        package_path = sublime.packages_path() + '/' + me
 
-                try:
-                    os.chdir(package_dir)
-                    sublime.status_message("[%s] npm install -g %s" % ( me, package))
-                    check_call(['npm', 'install', '-g',  package])
-                    sublime.status_message("[%s] Completed" % me)
+        # Install packages specified in the array
+        if len(packages) > 0:
+            for package in packages:
+                if package:
+                    try:
+                        os.chdir(package_path)
+                        sublime.status_message("[%s] npm install -g %s" % ( me, package))
+                        check_call(['npm', 'install', '-g',  package])
+                        sublime.status_message("[%s] Completed" % me)
 
-                except subprocess.CalledProcessError:
-                    npm_error(me)
+                    except subprocess.CalledProcessError:
+                        npm_error(me)
 
-            else:
-                conf_error(me)
+                else:
+                    conf_error(me)
 
-    # Install packages from package.json
-    elif len(packages) is 0 and os.path.isfile(package_dir + "/package.json"):
+        # Install packages from package.json
+        elif len(packages) is 0 and os.path.isfile(package_path + "/package.json"):
 
-        try:
-            os.chdir(package_dir)
-            sublime.status_message("[%s] npm install" % me)
-            check_call(['npm', 'install', '-g', '--production'])
-            sublime.status_message("[%s] Completed" % me)
+            try:
+                os.chdir(package_path)
+                sublime.status_message("[%s] npm install" % me)
+                check_call(['npm', 'install', '-g', '--production'])
+                sublime.status_message("[%s] Completed" % me)
 
-        except subprocess.CalledProcessError:
-            npm_error(me)
+            except subprocess.CalledProcessError:
+                npm_error(me)

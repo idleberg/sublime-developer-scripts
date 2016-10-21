@@ -21,36 +21,39 @@ def plugin_loaded():
     from package_control import events
     from subprocess import check_call
 
-    # Get name of package folder
+    # Get name of package
     me = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
-    package_dir = sublime.packages_path() + '/' + me
+    if events.install(me) or events.post_upgrade(me):
 
-    # Install packages specified in the array
-    if len(repositories) > 0:
-        for repository in repositories:
-            if repository:
-                try:
-                    os.chdir(package_dir)
-                    repository_dir = os.path.basename(repository)
+        # Get absolute package path
+        package_path = sublime.packages_path() + '/' + me
 
-                    # git-pull if directory exists
-                    if os.path.isdir(repository_dir):
-                        os.chdir(repository_dir)
-                        sublime.status_message("[%s] git pull" % me)
-                        check_call(['git', 'pull', repository])
+        # Install packages specified in the array
+        if len(repositories) > 0:
+            for repository in repositories:
+                if repository:
+                    try:
+                        os.chdir(package_path)
+                        repository_dir = os.path.basename(repository)
 
-                    # git-clone
-                    else:
-                        sublime.status_message("[%s] git clone" % me)
-                        check_call(['git', 'clone', repository])
+                        # git-pull if directory exists
+                        if os.path.isdir(repository_dir):
+                            os.chdir(repository_dir)
+                            sublime.status_message("[%s] git pull" % me)
+                            check_call(['git', 'pull', repository])
 
-                except subprocess.CalledProcessError:
-                    git_error(me)
+                        # git-clone
+                        else:
+                            sublime.status_message("[%s] git clone" % me)
+                            check_call(['git', 'clone', repository])
 
-                sublime.status_message("[%s] Completed" % me)
+                    except subprocess.CalledProcessError:
+                        git_error(me)
 
-            else:
-                conf_error(me)
-    else:
-        conf_error(me)
+                    sublime.status_message("[%s] Completed" % me)
+
+                else:
+                    conf_error(me)
+        else:
+            conf_error(me)
